@@ -95,7 +95,7 @@ argocd-apps:
           duration: 5s
           factor: 2
           maxDuration: 3m
-  - name: paperless-ngx
+  - name: paperless
     namespace: argocd
     additionalLabels:
       type: workload-component
@@ -104,7 +104,7 @@ argocd-apps:
     - resources-finalizer.argocd.argoproj.io
     project: workload
     source:
-      chart: "paperless-ngx"
+      chart: "paperless"
       repoURL: "https://charts.pascaliske.dev"
       targetRevision: "5.0.0"
     destination:
