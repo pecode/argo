@@ -107,6 +107,10 @@ argocd-apps:
       chart: "paperless"
       repoURL: "https://charts.pascaliske.dev"
       targetRevision: "5.0.0"
+        helm:
+          values: |
+            redis:
+              enabled: true
     destination:
       server: https://kubernetes.default.svc
       namespace: paperless-ngx
