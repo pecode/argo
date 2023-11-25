@@ -1,0 +1,38 @@
+argocd-apps:
+  projects:
+  - name: platform-components
+    namespace: argocd
+    additionalLabels:
+      audience: internal
+      owner: platform-engineering
+    additionalAnnotations: {}
+    finalizers:
+    - resources-finalizer.argocd.argoproj.io
+    description: Platform apps
+    sourceRepos:
+    - '*'
+    destinations:
+    - namespace: '*'
+      server: https://kubernetes.default.svc
+    clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  applications:
+  - name: kubernetes-secrets-generator
+    namespace: argocd
+    additionalLabels:
+      type: platform-component
+    additionalAnnotations: {}
+    finalizers:
+    - resources-finalizer.argocd.argoproj.io
+    project: platform-components
+    source:
+      chart: "kubernetes-secret-generator"
+      repoURL: "https://helm.mittwald.de"
+      targetRevision: "3.4.0"
+    destination:
+      server: https://kubernetes.default.svc
+      namespace: kubernetes-secrets-generator
+  applicationsets: []
+  extensions: []
+
