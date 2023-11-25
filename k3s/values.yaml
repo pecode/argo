@@ -33,6 +33,9 @@ argocd-apps:
     destination:
       server: https://kubernetes.default.svc
       namespace: kubernetes-secrets-generator
+    spec:
+      syncPolicy:
+        automated: {}
   applicationsets: []
   extensions: []
 
