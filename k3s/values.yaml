@@ -17,6 +17,23 @@ argocd-apps:
     clusterResourceWhitelist:
     - group: '*'
       kind: '*'
+  - name: workload
+    namespace: argocd
+    additionalLabels:
+      audience: internal
+      owner: dev
+    additionalAnnotations: {}
+    finalizers:
+    - resources-finalizer.argocd.argoproj.io
+    description: Platform apps
+    sourceRepos:
+    - '*'
+    destinations:
+    - namespace: '*'
+      server: https://kubernetes.default.svc
+    clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
   applications:
   - name: kubernetes-secrets-generator
     namespace: argocd
@@ -63,6 +80,36 @@ argocd-apps:
     destination:
       server: https://kubernetes.default.svc
       namespace: kubernetes-secrets-generator
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+      syncOptions:
+        - Validate=true
+        - CreateNamespace=true
+        - PrunePropagationPolicy=foreground
+        - PruneLast=true
+      retry:
+        limit: 1
+        backoff:
+          duration: 5s
+          factor: 2
+          maxDuration: 3m
+  - name: paperless-ngx
+    namespace: argocd
+    additionalLabels:
+      type: workload-component
+    additionalAnnotations: {}
+    finalizers:
+    - resources-finalizer.argocd.argoproj.io
+    project: workload
+    source:
+      chart: "paperless-ngx"
+      repoURL: "https://charts.pascaliske.dev"
+      targetRevision: "5.0.0"
+    destination:
+      server: https://kubernetes.default.svc
+      namespace: paperless-ngx
     syncPolicy:
       automated:
         prune: true
