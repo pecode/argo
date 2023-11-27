@@ -109,6 +109,15 @@ argocd-apps:
       targetRevision: "5.0.0"
       helm:
         values: |
+          env:
+          - name: PAPERLESS_ADMIN_USER
+            value: pecode
+          - name: PAPERLESS_ADMIN_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: paperless-admin
+                key: password
+                optional: false
           redis:
             enabled: true
     destination:
