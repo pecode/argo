@@ -65,36 +65,36 @@ argocd-apps:
           duration: 5s
           factor: 2
           maxDuration: 3m
-  - name: external-secrets
-    namespace: argocd
-    additionalLabels:
-      type: platform-component
-    additionalAnnotations: {}
-    finalizers:
-    - resources-finalizer.argocd.argoproj.io
-    project: platform-components
-    source:
-      chart: "external-secrets"
-      repoURL: "https://charts.external-secrets.io"
-      targetRevision: "0.6.1"
-    destination:
-      server: https://kubernetes.default.svc
-      namespace: kubernetes-secrets-generator
-    syncPolicy:
-      automated:
-        prune: true
-        selfHeal: true
-      syncOptions:
-        - Validate=true
-        - CreateNamespace=true
-        - PrunePropagationPolicy=foreground
-        - PruneLast=true
-      retry:
-        limit: 1
-        backoff:
-          duration: 5s
-          factor: 2
-          maxDuration: 3m
+  # - name: external-secrets
+  #   namespace: argocd
+  #   additionalLabels:
+  #     type: platform-component
+  #   additionalAnnotations: {}
+  #   finalizers:
+  #   - resources-finalizer.argocd.argoproj.io
+  #   project: platform-components
+  #   source:
+  #     chart: "external-secrets"
+  #     repoURL: "https://charts.external-secrets.io"
+  #     targetRevision: "0.6.1"
+  #   destination:
+  #     server: https://kubernetes.default.svc
+  #     namespace: kubernetes-secrets-generator
+  #   syncPolicy:
+  #     automated:
+  #       prune: true
+  #       selfHeal: true
+  #     syncOptions:
+  #       - Validate=true
+  #       - CreateNamespace=true
+  #       - PrunePropagationPolicy=foreground
+  #       - PruneLast=true
+  #     retry:
+  #       limit: 1
+  #       backoff:
+  #         duration: 5s
+  #         factor: 2
+  #         maxDuration: 3m
   - name: paperless
     namespace: argocd
     additionalLabels:
